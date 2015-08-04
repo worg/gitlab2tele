@@ -21,11 +21,10 @@ class TeleSender():
         self.bot.send_message(self.chat_id, msg)
 
     def __parse_push_event(self, json_obj):
-        push_user = json_obj['user_name']
-        commit_count = json_obj['total_commits_count']
-        repo_url = json_obj['repository']['homepage']
-        repo_name = json_obj['repository']['name']
-        ret = '%s push %d commits to %s. %s' % (push_user, commit_count, repo_name, repo_url)
+        d = json_obj;
+        ret = '%s pushed %d commits to %s<%s> \n' % (d['user_name'], d['total_commits_count'], d['repository']['name'], d['ref'].replace('refs/heads/',''))
+        for c in d['commits']:
+            ret += '%s: %s - %s\n' % (c['id'][:7], c['message'][:80], c['author']['name']) #print commit summary
         return ret
 
     def __revice_merge_request(self, json_obj):
