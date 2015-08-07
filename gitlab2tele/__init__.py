@@ -22,9 +22,9 @@ class TeleSender():
 
     def __parse_push_event(self, json_obj):
         d = json_obj;
-        ret = '%s pushed %d commits to %s<%s> \n' % (d['user_name'], d['total_commits_count'], d['repository']['name'], d['ref'].replace('refs/heads/',''))
+        ret = u'%s pushed %d commits to %s<%s> \n' % (d['user_name'], d['total_commits_count'], d['repository']['name'], d['ref'].replace('refs/heads/',''))
         for c in d['commits']:
-            ret += '%s: %s - %s \n' % (c['id'][:7], c['message'][:80].rstrip(), c['author']['name']) #print commit summary
+            ret += u'%s: %s - %s \n' % (c['id'][:7], c['message'][:80].rstrip(), c['author']['name']) #print commit summary
         return ret
 
     def __revice_merge_request(self, json_obj):
